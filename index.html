@@ -19,8 +19,8 @@
             <textarea id="notes" name="notes" rows="4"></textarea>
         </div> -->
         <div class = "form-group"> 
-            <label for="tea-name">お茶の名前:</label>
-            <input type="text" id="tea-name" name="tea-name">
+            <label for="tname">お茶の名前:</label>
+            <input type="text" id="tname" name="tname">
         </div>
         <div class="form-group-inline">
             <label for="notes">お茶の感想メモ:</label>
@@ -58,10 +58,11 @@
         <label for="photo">写真:</label>
         <input type="file" id="photo" name="photo" accept="image/*">
 
-        <button type="submit">保存</button>
+        <button id="send">送信</button>
+        <div id="output" style="overflow: auto; height:200px;"></div>
+    </div>
+    
     </form>
-
-
 
 
     <script type="module">
@@ -85,7 +86,33 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app); // RealtimeDatabase使うよ
-        const dbRef = ref(db, "TEARC"); // RealtimeDatabase”chat“を使うよ
+        const dbRef = ref(db, "TEARC"); // RealtimeDatabase”TEARC“を使うよ
+
+        //送信
+        $("#send").on("click",function(){
+            const msg = {
+            date : $("#date").val(),
+            tname : $("#tname").val(),
+            notes : $("#notes").val()
+            }
+            const a = push(dbRef);
+            set(a,msg);
+        });
+        //受信
+        onChildAdded(dbRef,function(data){
+            const msg = data.val();
+            const key = data.key;
+            console.log(msg);
+            let h = '<p>';
+                h += msg.date;
+                h += '<br>';
+                h += msg.tname;
+                h += '<br>';
+                h += msg.notes;
+                h += '</p>';
+                $("#output").prepend(h)
+        });
+
       </script>
 </body>
 </html>

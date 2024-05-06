@@ -7,6 +7,27 @@
     <title>Tea Researcher</title>
 </head>
 <body>
-    
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBVqOcrPfUdCDSA3zjtiM2Gdp9oxLJbzHA",
+          authDomain: "tearc-92e5d.firebaseapp.com",
+          projectId: "tearc-92e5d",
+          storageBucket: "tearc-92e5d.appspot.com",
+          messagingSenderId: "712085481036",
+          appId: "1:712085481036:web:d7a533af600e81b5b0f6e9"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app); // RealtimeDatabase使うよ
+        const dbRef = ref(db, "TEARC"); // RealtimeDatabase”chat“を使うよ
+      </script>
 </body>
 </html>

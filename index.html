@@ -14,10 +14,6 @@
         <label for="date">試飲した日付:</label>
         <input type="date" id="date" name="date">
         </div>
-        <!-- <div class = "form-group"> 
-            <label for="notes">お茶の感想メモ:</label>
-            <textarea id="notes" name="notes" rows="4"></textarea>
-        </div> -->
         <div class = "form-group"> 
             <label for="tname">お茶の名前:</label>
             <input type="text" id="tname" name="tname">
@@ -26,45 +22,61 @@
             <label for="notes">お茶の感想メモ:</label>
             <textarea id="notes" name="notes" rows="4"></textarea>
         </div>
-
-        <div class="chart-group">
-            <label for="taste">味わい:</label>
-            <input type="range" id="taste" name="taste" min="1" max="5">
-        </div>
-
-        <div class="chart-group">
-            <label for="color">水色:</label>
-            <input type="range" id="color" name="color" min="1" max="5">
-        </div>
-
-        <div class="chart-group">
-            <label for="aroma">香り:</label>
-            <input type="range" id="aroma" name="aroma" min="1" max="5">
-        </div>
-
-        <div class="chart-group">
-            <label for="sweetness">甘味:</label>
-            <input type="range" id="sweetness" name="sweetness" min="1" max="5">
-        </div>
-
-        <div class="chart-group">
-            <label for="bitterness">渋み:</label>
-            <input type="range" id="bitterness" name="bitterness" min="1" max="5">
-        </div>
-
-        <label for="preference">好感度:</label>
-        <input type="range" id="preference" name="preference" min="1" max="5">
+        <!-- <form id="tea-form"> -->
+            <div class="chart-group">
+                <label for="taste">味わい:</label>
+                <input type="range" id="taste" name="taste" min="1" max="5" oninput="updateLabel('taste')">
+                <div id="taste-label">3</div>
+            </div>
+    
+            <div class="chart-group">
+                <label for="color">水色:</label>
+                <input type="range" id="color" name="color" min="1" max="5" oninput="updateLabel('color')">
+                <div id="color-label">3</div>
+            </div>
+    
+            <div class="chart-group">
+                <label for="aroma">香り:</label>
+                <input type="range" id="aroma" name="aroma" min="1" max="5" oninput="updateLabel('aroma')">
+                <div id="aroma-label">3</div>
+            </div>
+    
+            <div class="chart-group">
+                <label for="sweetness">甘味:</label>
+                <input type="range" id="sweetness" name="sweetness" min="1" max="5" oninput="updateLabel('sweetness')">
+                <div id="sweetness-label">3</div>
+            </div>
+    
+            <div class="chart-group">
+                <label for="bitterness">渋み:</label>
+                <input type="range" id="bitterness" name="bitterness" min="1" max="5" oninput="updateLabel('bitterness')">
+                <div id="bitterness-label">3</div>
+            </div>
+    
+            <label for="preference">好感度:</label>
+            <input type="range" id="preference" name="preference" min="1" max="5" oninput="updateLabel('preference')">
+            <div id="preference-label">3</div>
+            
+            <!-- その他のフィールド -->
+        </form>
+        
 
         <label for="photo">写真:</label>
         <input type="file" id="photo" name="photo" accept="image/*">
-
-        <button id="send">送信</button>
-        <div id="output" style="overflow: auto; height:200px;"></div>
-    </div>
-    
+    <button type="submit">送信</button>
     </form>
-
-
+    <div id="output" style="overflow: auto; height:200px;"></div>
+    
+    
+    
+    
+    <script>
+        function updateLabel(id) {
+            const slider = document.getElementById(id);
+            const label = document.getElementById(id + '-label');
+            label.textContent = slider.value; // スライダーの値をラベルに反映
+        }
+    </script>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
@@ -72,47 +84,56 @@
         from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
-      
         // Your web app's Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyBVqOcrPfUdCDSA3zjtiM2Gdp9oxLJbzHA",
-          authDomain: "tearc-92e5d.firebaseapp.com",
-          projectId: "tearc-92e5d",
-          storageBucket: "tearc-92e5d.appspot.com",
-          messagingSenderId: "712085481036",
-          appId: "1:712085481036:web:d7a533af600e81b5b0f6e9"
+        apiKey: "AIzaSyBVqOcrPfUdCDSA3zjtiM2Gdp9oxLJbzHA",
+        authDomain: "tearc-92e5d.firebaseapp.com",
+        projectId: "tearc-92e5d",
+        storageBucket: "tearc-92e5d.appspot.com",
+        messagingSenderId: "712085481036",
+        appId: "1:712085481036:web:d7a533af600e81b5b0f6e9"
         };
-      
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app); // RealtimeDatabase使うよ
         const dbRef = ref(db, "TEARC"); // RealtimeDatabase”TEARC“を使うよ
+        
+        // フォーム送信時にFirebaseにデータを送信する
+    $("#tea-form").on("submit", function (event) {
+    event.preventDefault(); // フォームの送信を防止
+    const msg = {
+        date: $("#date").val(),
+        tname: $("#tname").val(),
+        notes: $("#notes").val()
+    };
+    const a = push(dbRef);
+    set(a, msg);
+});
 
-        //送信
-        $("#send").on("click",function(){
-            const msg = {
-            date : $("#date").val(),
-            tname : $("#tname").val(),
-            notes : $("#notes").val()
-            }
-            const a = push(dbRef);
-            set(a,msg);
-        });
-        //受信
-        onChildAdded(dbRef,function(data){
-            const msg = data.val();
-            const key = data.key;
-            console.log(msg);
-            let h = '<p>';
-                h += msg.date;
-                h += '<br>';
-                h += msg.tname;
-                h += '<br>';
-                h += msg.notes;
-                h += '</p>';
-                $("#output").prepend(h)
-        });
-
-      </script>
+// 受信したデータをフォルダ形式で表示する
+onChildAdded(dbRef, function (data) {
+    const msg = data.val();
+    const key = data.key;
+    
+    // フォルダ的な要素の作成
+    const folder = document.createElement('div');
+    folder.className = 'folder';
+    folder.innerHTML = `
+        <div class="folder-header">${msg.date} - ${msg.tname}</div>
+        <div class="folder-content" style="display:none;">
+            <p>${msg.notes}</p>
+        </div>
+    `;
+    
+    // トグル表示のためのクリックイベント
+    folder.querySelector('.folder-header').addEventListener('click', function () {
+        const content = folder.querySelector('.folder-content');
+        content.style.display = content.style.display === 'none' ? 'block' : 'none';
+    });
+    
+    // 表示エリアにフォルダを追加
+    document.getElementById('output').prepend(folder);
+});
+</script>
 </body>
 </html>

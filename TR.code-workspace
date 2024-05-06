@@ -1,13 +1,7 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../img"
-		}
-	],
-	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "TR"
-	}
+    "folders": [
+        {
+            "path": "."
+        }
+    ]
 }

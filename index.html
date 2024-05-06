@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>お茶の試飲記録</h1>
+    <h1><img src="Revision.png" alt=""></h1>
     <form id="tea-form">
         <div class = "form-group">  
         <label for="date">試飲した日付:</label>
@@ -56,27 +56,54 @@
             <label for="preference">好感度:</label>
             <input type="range" id="preference" name="preference" min="1" max="5" oninput="updateLabel('preference')">
             <div id="preference-label">3</div>
-            
             <!-- その他のフィールド -->
-        </form>
-        
-
+        <!-- </form> -->
+        <!-- <canvas id="radar-chart" width="400" height="400"></canvas> -->
+            
         <label for="photo">写真:</label>
         <input type="file" id="photo" name="photo" accept="image/*">
     <button type="submit">送信</button>
     </form>
+    <canvas id="radar-chart" width="400" height="400"></canvas>
     <div id="output" style="overflow: auto; height:200px;"></div>
-    
-    
-    
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
         function updateLabel(id) {
             const slider = document.getElementById(id);
             const label = document.getElementById(id + '-label');
             label.textContent = slider.value; // スライダーの値をラベルに反映
         }
+        const ctx = document.getElementById('radar-chart').getContext('2d');
+        const radarChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['味わい', '水色', '香り', '甘味', '渋み'],
+                datasets: [{
+                    label: '評価',
+                    data: [3, 4, 5, 2, 4],
+                    fill: true,
+                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    pointBackgroundColor: 'rgba(0, 123, 255, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(0, 123, 255, 1)'
+                }]
+            },
+            options: {
+                scale: {
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 5
+                    }
+                }
+            }
+        });
     </script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
@@ -134,6 +161,7 @@ onChildAdded(dbRef, function (data) {
     // 表示エリアにフォルダを追加
     document.getElementById('output').prepend(folder);
 });
+
 </script>
 </body>
 </html>

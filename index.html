@@ -3,24 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/jquery-2.1.3.min.js"></script>
+    <!-- <script src="js/jquery-2.1.3.min.js"></script> -->
     <title>Tea Researcher</title>
 </head>
-<header>
-
-</header>
 
 <body>
     <h1>お茶の試飲記録</h1>
     <form id="tea-form">
+        <div class = "form-group">  
         <label for="date">試飲した日付:</label>
         <input type="date" id="date" name="date">
-
-        <label for="tea-name">お茶の名前:</label>
-        <input type="text" id="tea-name" name="tea-name">
-
-        <label for="notes">お茶の感想メモ:</label>
-        <textarea id="notes" name="notes" rows="4"></textarea>
+        </div>
+        <!-- <div class = "form-group"> 
+            <label for="notes">お茶の感想メモ:</label>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+        </div> -->
+        <div class = "form-group"> 
+            <label for="tea-name">お茶の名前:</label>
+            <input type="text" id="tea-name" name="tea-name">
+        </div>
+        <div class="form-group-inline">
+            <label for="notes">お茶の感想メモ:</label>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+        </div>
 
         <div class="chart-group">
             <label for="taste">味わい:</label>
@@ -63,7 +68,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getDatabase, ref, push, set, onChildAdded, remove,onChildRemoved }
-        from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+        from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
       

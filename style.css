@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin: 8px 0;
+}
+
+input[type="text"],
+textarea,
+select,
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.chart-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-group label {
+    margin: 4px 0;
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+button[type="submit"] {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}

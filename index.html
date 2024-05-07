@@ -96,8 +96,6 @@
             radarChart.update(); // チャートを更新
         });
     </script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
@@ -129,10 +127,9 @@
     };
     const a = push(dbRef);
     set(a, msg);
-});
-
+    });
 // 受信したデータをフォルダ形式で表示する
-onChildAdded(dbRef, function (data) {
+    onChildAdded(dbRef, function (data) {
     const msg = data.val();
     const key = data.key;
     
@@ -142,9 +139,8 @@ onChildAdded(dbRef, function (data) {
     folder.innerHTML = `
         <div class="folder-header">${msg.date} - ${msg.tname}</div>
         <div class="folder-content" style="display:none;">
-            <p>${msg.notes}</p>
-        </div>
-    `;
+        <p>${msg.notes}</p>
+        </div>`;
     
     // トグル表示のためのクリックイベント
     folder.querySelector('.folder-header').addEventListener('click', function () {
@@ -154,8 +150,7 @@ onChildAdded(dbRef, function (data) {
     
     // 表示エリアにフォルダを追加
     document.getElementById('output').prepend(folder);
-});
-
+    });
 </script>
 </body>
 </html>

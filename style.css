@@ -1,111 +1,42 @@
 body {
+    background-color: #f8d7da; /* 薄いピンク */
     font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 20px;
-}
-
-h1 {
+    font-size: 20px; /* 文字サイズを大きく */
     text-align: center;
-}
-
-label {
-    display: block;
-    margin: 8px 0;
-}
-
-input[type="text"],
-textarea,
-select,
-input[type="date"] {
-    width: 100%;
-    padding: 8px;
-    margin: 8px 0;
-    box-sizing: border-box;
-}
-
-.chart-group {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-.chart-group label {
-    margin: 4px 0;
-}
-
-input[type="range"] {
+#container {
+    background-color: #d4edda; /* 薄い緑 */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
     width: 100%;
 }
 
-button[type="submit"] {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button[type="submit"]:hover {
-    background-color: #45a049;
-}
-
-.form-group {
+#container img {
     margin-bottom: 20px;
 }
 
-label, input[type="text"], textarea, input[type="date"] {
-    display: block;
+input, textarea {
     width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-}
-
-.form-group-inline {
-    display: flex;
-    align-items: flex-start; /* テキストエリアをラベルの上に揃える */
-    gap: 10px; /* 必要に応じてギャップを調整 */
-}
-
-.form-group-inline label {
-    flex-basis: 150px; /* 必要に応じて幅を調整 */
-}
-
-.form-group-inline textarea {
-    width: calc(100% - 160px); /* 必要に応じて幅を調整 */
-}
-.folder {
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.folder-header {
-    background-color: #f0f0f0;
     padding: 10px;
+    margin-bottom: 20px;
+    font-size: 20px; /* 文字サイズを大きく */
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 20px; /* 文字サイズを大きく */
     cursor: pointer;
-    font-weight: bold;
 }
 
-.folder-content {
-    padding: 10px;
-    border-top: 1px solid #ccc;
-}
-.folder {
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.folder-header {
-    background-color: #f0f0f0;
-    padding: 10px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.folder-content {
-    padding: 10px;
-    border-top: 1px solid #ccc;
+canvas {
+    margin-top: 20px;
+    width: 100%;
 }

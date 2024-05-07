@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Tea Researcher</title>
 </head>
 <body>
@@ -22,47 +23,37 @@
             <label for="notes">お茶の感想メモ:</label>
             <textarea id="notes" name="notes" rows="4"></textarea>
         </div>
-            <div class="chart-group">
-                <label for="taste">味わい:</label>
-                <input type="number" id="taste" name="taste" min="0" max="5">
-            </div>
-        
-            <div class="chart-group">
-                <label for="color">水色:</label>
-                <input type="number" id="color" name="color" min="0" max="5">
-            </div>
-        
-            <div class="chart-group">
-                <label for="aroma">香り:</label>
-                <input type="number" id="aroma" name="aroma" min="0" max="5">
-            </div>
-        
-            <div class="chart-group">
-                <label for="sweetness">甘味:</label>
-                <input type="number" id="sweetness" name="sweetness" min="0" max="5">
-            </div>
-        
-            <div class="chart-group">
-                <label for="bitterness">渋み:</label>
-                <input type="number" id="bitterness" name="bitterness" min="0" max="5">
-            </div>
-        
-            <button type="button" id="chart-button">決定</button>
-            <button type="submit">送信</button>
-
-        </form>
-        <!-- <canvas id="radar-chart" width="400" height="400"></canvas> -->
-                <!-- </div> -->
-        <!-- <label for="photo">写真:</label>
-        <input type="file" id="photo" name="photo" accept="image/*"> -->
-    <canvas id="radar-chart" width="400" height="400"></canvas>
-    <div id="output" style="overflow: auto; height:200px;"></div>
-</div>
+        <div class="chart-group">
+            <label for="taste">味わい:</label>
+            <input type="number" id="taste" name="taste" min="0" max="5">
+        </div>
+        <div class="chart-group">
+            <label for="color">水色:</label>
+            <input type="number" id="color" name="color" min="0" max="5">
+        </div>
+        <div class="chart-group">
+            <label for="aroma">香り:</label>
+            <input type="number" id="aroma" name="aroma" min="0" max="5">
+        </div>
+        <div class="chart-group">
+            <label for="sweetness">甘味:</label>
+            <input type="number" id="sweetness" name="sweetness" min="0" max="5">
+        </div>
+        <div class="chart-group">
+            <label for="bitterness">渋み:</label>
+            <input type="number" id="bitterness" name="bitterness" min="0" max="5">
+        </div>
+    
+        <button type="button" id="chart-button">決定</button>
+        <button type="submit">送信</button>
+        <label for="photo">写真:</label>
+        <input type="file" id="photo" name="photo" accept="image/*">
+        <canvas id="radar-chart" width= "30" height="30"></canvas>
+        <div id="output" style="overflow: auto; height:200px;"></div>
+    </div>
+    </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <!-- <script> -->
-        <!-- <script> -->
-  <script>
+    <script>
         // チャートの初期設定
         const ctx = document.getElementById('radar-chart').getContext('2d');
         const radarChart = new Chart(ctx, {

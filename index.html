@@ -118,16 +118,16 @@
         const dbRef = ref(db, "TEARC"); // RealtimeDatabase”TEARC“を使うよ
         
         // フォーム送信時にFirebaseにデータを送信する
-    $("#tea-form").on("submit", function (event) {
-    event.preventDefault(); // フォームの送信を防止
-    const msg = {
+        $("#tea-form").on("submit", function (event) {
+        event.preventDefault(); // フォームの送信を防止
+        const msg = {
         date: $("#date").val(),
         tname: $("#tname").val(),
         notes: $("#notes").val()
-    };
-    const a = push(dbRef);
-    set(a, msg);
-    });
+        };
+        const a = push(dbRef);
+        set(a, msg);
+        });
 // 受信したデータをフォルダ形式で表示する
     onChildAdded(dbRef, function (data) {
     const msg = data.val();

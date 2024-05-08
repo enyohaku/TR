@@ -2,10 +2,9 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <meta  name=”viewport” content=”width=device-width,initial-scale=1.0″>
     <title>Tea Researcher</title>
 </head>
 <body>
@@ -44,13 +43,17 @@
             <label for="bitterness">渋み:</label>
             <input type="number" id="bitterness" name="bitterness" min="0" max="5">
         </div>
-    
         <button type="button" id="chart-button">決定</button>
-        <button type="submit">送信</button>
         <label for="photo">写真:</label>
         <input type="file" id="photo" name="photo" accept="image/*">
-        <canvas id="radar-chart" width= "30" height="30"></canvas>
-        <div id="output" style="overflow: auto; height:200px;"></div>
+        <div id="container" style="width: 350px; height: 400px;">
+        <canvas id="radar-chart"></canvas>
+        </div>
+        
+        <div id="output" style="overflow: auto; "></div>
+
+        <button type="submit">送信</button>
+
     </div>
     </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -102,6 +105,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
         import { getDatabase, ref, push, set, onChildAdded, remove,onChildRemoved }
         from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+        import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
         // Your web app's Firebase configuration
@@ -116,42 +120,67 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app); // RealtimeDatabase使うよ
+        const storage =getStorage(app);
         const dbRef = ref(db, "TEARC"); // RealtimeDatabase”TEARC“を使うよ
         
+        //画像アップロード用
+        $("#photo").on("change", function(e) {
+        const file = e.target.files[0];
+        const storageRef = sRef(storage, 'images/' + file.name); // 'images/'は任意のパス
+
+        uploadBytes(storageRef, file).then((snapshot) => {
+                        console.log('Uploaded a blob or file!');
+        });
+    }); (edited)
         // フォーム送信時にFirebaseにデータを送信する
         $("#tea-form").on("submit", function (event) {
         event.preventDefault(); // フォームの送信を防止
         const msg = {
         date: $("#date").val(),
         tname: $("#tname").val(),
-        notes: $("#notes").val()
+        notes: $("#notes").val(),
+        radar: $("#rader").val(),
+        image: $("#imageUrl").val()
         };
         const a = push(dbRef);
         set(a, msg);
         });
-// 受信したデータをフォルダ形式で表示する
-    onChildAdded(dbRef, function (data) {
-    const msg = data.val();
-    const key = data.key;
+        // 送信（最後の登録？）ボタンに加える。
+        let imageUrl = "";
+        if (document.getElementById('photo').files.length > 0) {
+            const file = document.getElementById('photo').files[0];
+            const storageRef = sRef(storage, 'images/' + file.name);
+            try{
+                const snapshot = await uploadBytes(storageRef, file);
+                imageUrl = await getDownloadURL(snapshot.ref);
+            } catch (error) {
+                                console.error('Error uploading file and getting download URL', error);
+            }
+        }
+
+// // 受信したデータをフォルダ形式で表示する
+//     onChildAdded(dbRef, function (data) {
+//     const msg = data.val();
+//     const key = data.key;
     
-    // フォルダ的な要素の作成
-    const folder = document.createElement('div');
-    folder.className = 'folder';
-    folder.innerHTML = `
-        <div class="folder-header">${msg.date} - ${msg.tname}</div>
-        <div class="folder-content" style="display:none;">
-        <p>${msg.notes}</p>
-        </div>`;
+//     // フォルダ的な要素の作成
+//     const folder = document.createElement('div');
+//     folder.className = 'folder';
+//     folder.innerHTML = `
+//         <div class="folder-header">${msg.date} - ${msg.tname}</div>
+//         <div class="folder-content" style="display:none;">
+//         <p>${msg.notes}</p>
+//         </div>`;
     
-    // トグル表示のためのクリックイベント
-    folder.querySelector('.folder-header').addEventListener('click', function () {
-        const content = folder.querySelector('.folder-content');
-        content.style.display = content.style.display === 'none' ? 'block' : 'none';
-    });
+//     // トグル表示のためのクリックイベント
+//     folder.querySelector('.folder-header').addEventListener('click', function () {
+//         const content = folder.querySelector('.folder-content');
+//         content.style.display = content.style.display === 'none' ? 'block' : 'none';
+//     });
     
-    // 表示エリアにフォルダを追加
-    document.getElementById('output').prepend(folder);
-    });
+//     // 表示エリアにフォルダを追加
+//     document.getElementById('output').prepend(folder);
+//     });
 </script>
 </body>
 </html>
